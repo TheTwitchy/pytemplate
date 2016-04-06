@@ -6,6 +6,7 @@ VERSION = "0.1"
 PROG_NAME = "template"
 PROG_DESC = "TheTwitchy standard Python template."
 PROG_EPILOG = "Written by TheTwitchy. Source available at github.com/TheTwitchy/pytemplate"
+DEBUG = True
 
 #Application imports.
 import sys,signal
@@ -38,8 +39,9 @@ def print_err(*args):
     sys.stderr.write(try_color(" ".join(map(str,args)) + "\n", "red"))
 #Print a debug statement to stdout
 def print_debug(*args):
-    sys.stderr.write(try_color(PROG_NAME + ": debug: ", "blue"))
-    sys.stderr.write(try_color(" ".join(map(str,args)) + "\n", "blue"))
+    if DEBUG:
+        sys.stderr.write(try_color(PROG_NAME + ": debug: ", "blue"))
+        sys.stderr.write(try_color(" ".join(map(str,args)) + "\n", "blue"))
 #Handles early quitters.
 def signal_handler(signal, frame):
     print ""
@@ -59,12 +61,8 @@ def print_header():
     print "                             version " + VERSION
     print ""
 
-#Main application entry point.
-def main():
-    #Signal handler to catch CTRL-C (quit immediately)
-    signal.signal(signal.SIGINT, signal_handler)
-    signal.signal(signal.SIGTERM, signal_handler)
-
+# Argument parsing which outputs a dictionary.
+def parseArgs():
     #Setup the argparser and all args
     parser = argparse.ArgumentParser(prog=PROG_NAME, description=PROG_DESC, epilog=PROG_EPILOG)
     parser.add_argument("-v", "--version", action="version", version="%(prog)s " + VERSION)
@@ -75,13 +73,21 @@ def main():
     parser.add_argument("-n", "--no", help="a 'no' switch", dest="switch", action="store_false")
     parser.set_defaults(switch=True)
     parser.add_argument("string", help="a required string", nargs="+")
-    args = parser.parse_args()
+    return parser.parse_args()
+
+#Main application entry point.
+def main():
+    #Signal handler to catch CTRL-C (quit immediately)
+    signal.signal(signal.SIGINT, signal_handler)
+    signal.signal(signal.SIGTERM, signal_handler)
+
+    argv = parseArgs()
 
     #TODO Retrieve arg values for application use.
-    var_quiet = args.quiet
-    var_int = args.int
-    var_switch = args.switch
-    var_string_args = args.string
+    var_quiet = argv.quiet
+    var_int = argv.int
+    var_switch = argv.switch
+    var_string_args = argv.string
 
     #Print out some sweet ASCII art.
     if not var_quiet:
