@@ -7,4 +7,4 @@ A search for 'TODO' will show every section of code to modify in a new applicati
 
 This template has an optional dependency on termcolor for text coloration, and will auto-detect it's availability at runtime.
 
-This template was written (and used mainly) by TheTwitchy. Others are welcome to make use, but pushes may not be accepted, unless they're amazing.
+This template was written (and used mainly) by TheTwitchy. Others are welcome to make use, but pushes may not be accepted, unless they're amazing (it's not you, it's me). 

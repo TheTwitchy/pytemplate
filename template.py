@@ -31,16 +31,16 @@ def try_color(string, color):
         return string
 #Print some info to stdout
 def print_info(*args):
-    sys.stdout.write(try_color(PROG_NAME + ": info: ", "green"))
+    sys.stdout.write(try_color("info: ", "green"))
     sys.stdout.write(try_color(" ".join(map(str,args)) + "\n", "green"))
 #Print an error to stderr
 def print_err(*args):
-    sys.stderr.write(try_color(PROG_NAME + ": error: ", "red"))
+    sys.stderr.write(try_color("error: ", "red"))
     sys.stderr.write(try_color(" ".join(map(str,args)) + "\n", "red"))
 #Print a debug statement to stdout
 def print_debug(*args):
     if DEBUG:
-        sys.stderr.write(try_color(PROG_NAME + ": debug: ", "blue"))
+        sys.stderr.write(try_color("debug: ", "blue"))
         sys.stderr.write(try_color(" ".join(map(str,args)) + "\n", "blue"))
 #Handles early quitters.
 def signal_handler(signal, frame):
@@ -99,7 +99,6 @@ def main():
     print_debug("string = '%s'" % var_string_args)
     print_info("Preparing to exit non-gracefully...")
     print_err("Now exiting.")
-
 
 if __name__ == "__main__":
     main()
